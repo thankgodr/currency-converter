@@ -1,0 +1,26 @@
+package com.richard.currencycoverter.feature_currencyconverter.presentation.composables
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.richard.currencycoverter.feature_currencyconverter.presentation.ConvertViewModel
+
+@Composable
+fun GridCurrency(viewModel: ConvertViewModel = hiltViewModel()){
+    val list = viewModel.updateCurrencyGrid().value
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        contentPadding = PaddingValues(10.dp),
+        modifier = Modifier.semantics { testTag = "grid" }
+    ){
+        items(list.size){ index ->
+            SingleCurrencyCard(currency = list.get(index))
+        }
+    }
+}
